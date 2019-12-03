@@ -117,6 +117,7 @@ import org.apache.camel.spi.UuidGenerator;
 import org.apache.camel.support.CamelContextHelper;
 import org.apache.camel.support.ObjectHelper;
 import org.apache.camel.util.StringHelper;
+import org.apache.camel.util.concurrent.ThreadPoolRejectedPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -748,6 +749,8 @@ public abstract class AbstractCamelContextFactoryBean<T extends ModelCamelContex
 
     public abstract String getTracePattern();
 
+    public abstract String getBacklogTrace();
+
     public abstract String getMessageHistory();
 
     public abstract String getLogMask();
@@ -848,6 +851,9 @@ public abstract class AbstractCamelContextFactoryBean<T extends ModelCamelContex
         }
         if (getTracePattern() != null) {
             context.setTracingPattern(CamelContextHelper.parseText(context, getTracePattern()));
+        }
+        if (getBacklogTrace() != null) {
+            context.setBacklogTracing(CamelContextHelper.parseBoolean(context, getBacklogTrace()));
         }
         if (getMessageHistory() != null) {
             context.setMessageHistory(CamelContextHelper.parseBoolean(context, getMessageHistory()));
@@ -998,7 +1004,7 @@ public abstract class AbstractCamelContextFactoryBean<T extends ModelCamelContex
         answer.setKeepAliveTime(CamelContextHelper.parseLong(context, definition.getKeepAliveTime()));
         answer.setMaxQueueSize(CamelContextHelper.parseInteger(context, definition.getMaxQueueSize()));
         answer.setAllowCoreThreadTimeOut(CamelContextHelper.parseBoolean(context, definition.getAllowCoreThreadTimeOut()));
-        answer.setRejectedPolicy(definition.getRejectedPolicy());
+        answer.setRejectedPolicy(CamelContextHelper.parse(context, ThreadPoolRejectedPolicy.class, definition.getRejectedPolicy()));
         answer.setTimeUnit(definition.getTimeUnit());
         return answer;
     }
@@ -1077,7 +1083,7 @@ public abstract class AbstractCamelContextFactoryBean<T extends ModelCamelContex
                 filter.addExcludePattern(exclude);
             }
             // lets be false by default, to skip prototype beans
-            boolean includeNonSingletons = contextScanDef.getIncludeNonSingletons() != null ? contextScanDef.getIncludeNonSingletons() : false;
+            boolean includeNonSingletons = contextScanDef.getIncludeNonSingletons() != null && Boolean.parseBoolean(contextScanDef.getIncludeNonSingletons());
             findRouteBuildersByContextScan(filter, includeNonSingletons, builders);
         }
     }

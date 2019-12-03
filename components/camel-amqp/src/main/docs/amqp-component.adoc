@@ -40,13 +40,16 @@ xref:jms-component.adoc[JMS] component after the destination name.
 
 
 // component options: START
-The AMQP component supports 82 options, which are listed below.
+The AMQP component supports 85 options, which are listed below.
 
 
 
 [width="100%",cols="2,5,^1,2",options="header"]
 |===
 | Name | Description | Default | Type
+| *includeAmqpAnnotations* (common) | Whether to include AMQP annotations when mapping from AMQP to Camel Message. Setting this to true will map AMQP message annotations to message headers. Due to limitations in Apache Qpid JMS API, currently delivery annotations are ignored. | false | boolean
+| *allowAutoWired ConnectionFactory* (advanced) | Whether to auto-discover ConnectionFactory from the registry, if no connection factory has been configured. If only one instance of ConnectionFactory is found then it will be used. This is enabled by default. | false | boolean
+| *allowAutoWired DestinationResolver* (advanced) | Whether to auto-discover DestinationResolver from the registry, if no destination resolver has been configured. If only one instance of DestinationResolver is found then it will be used. This is enabled by default. | false | boolean
 | *configuration* (advanced) | To use a shared JMS configuration |  | JmsConfiguration
 | *acceptMessagesWhile Stopping* (consumer) | Specifies whether the consumer accept messages while it is stopping. You may consider enabling this option, if you start and stop JMS routes at runtime, while there are still messages enqueued on the queue. If this option is false, and you stop the JMS route, then messages may be rejected, and the JMS broker would have to attempt redeliveries, which yet again may be rejected, and eventually the message may be moved at a dead letter queue on the JMS broker. To avoid this its recommended to enable this option. | false | boolean
 | *allowReplyManagerQuick Stop* (consumer) | Whether the DefaultMessageListenerContainer used in the reply managers for request-reply messaging allow the DefaultMessageListenerContainer.runningAllowed flag to quick stop in case JmsConfiguration#isAcceptMessagesWhileStopping is enabled, and org.apache.camel.CamelContext is currently being stopped. This quick stop ability is enabled by default in the regular JMS consumers but to enable for reply managers you must enable this flag. | false | boolean
@@ -275,7 +278,7 @@ When using Spring Boot make sure to use the following Maven dependency to have s
 ----
 
 
-The component supports 83 options, which are listed below.
+The component supports 86 options, which are listed below.
 
 
 
@@ -286,6 +289,8 @@ The component supports 83 options, which are listed below.
 | *camel.component.amqp.acknowledgement-mode* | The JMS acknowledgement mode defined as an Integer. Allows you to set vendor-specific extensions to the acknowledgment mode. For the regular modes, it is preferable to use the acknowledgementModeName instead. |  | Integer
 | *camel.component.amqp.acknowledgement-mode-name* | The JMS acknowledgement name, which is one of: SESSION_TRANSACTED, CLIENT_ACKNOWLEDGE, AUTO_ACKNOWLEDGE, DUPS_OK_ACKNOWLEDGE | AUTO_ACKNOWLEDGE | String
 | *camel.component.amqp.allow-additional-headers* | This option is used to allow additional headers which may have values that are invalid according to JMS specification. For example some message systems such as WMQ do this with header names using prefix JMS_IBM_MQMD_ containing values with byte array or other invalid types. You can specify multiple header names separated by comma, and use as suffix for wildcard matching. |  | String
+| *camel.component.amqp.allow-auto-wired-connection-factory* | Whether to auto-discover ConnectionFactory from the registry, if no connection factory has been configured. If only one instance of ConnectionFactory is found then it will be used. This is enabled by default. | false | Boolean
+| *camel.component.amqp.allow-auto-wired-destination-resolver* | Whether to auto-discover DestinationResolver from the registry, if no destination resolver has been configured. If only one instance of DestinationResolver is found then it will be used. This is enabled by default. | false | Boolean
 | *camel.component.amqp.allow-null-body* | Whether to allow sending messages with no body. If this option is false and the message body is null, then an JMSException is thrown. | true | Boolean
 | *camel.component.amqp.allow-reply-manager-quick-stop* | Whether the DefaultMessageListenerContainer used in the reply managers for request-reply messaging allow the DefaultMessageListenerContainer.runningAllowed flag to quick stop in case JmsConfiguration#isAcceptMessagesWhileStopping is enabled, and org.apache.camel.CamelContext is currently being stopped. This quick stop ability is enabled by default in the regular JMS consumers but to enable for reply managers you must enable this flag. | false | Boolean
 | *camel.component.amqp.always-copy-message* | If true, Camel will always make a JMS message copy of the message when it is passed to the producer for sending. Copying the message is needed in some situations, such as when a replyToDestinationSelectorName is set (incidentally, Camel will set the alwaysCopyMessage option to true, if a replyToDestinationSelectorName is set). | false | Boolean
@@ -309,7 +314,7 @@ The component supports 83 options, which are listed below.
 | *camel.component.amqp.durable-subscription-name* | The durable subscriber name for specifying durable topic subscriptions. The clientId option must be configured as well. |  | String
 | *camel.component.amqp.eager-loading-of-properties* | Enables eager loading of JMS properties as soon as a message is loaded which generally is inefficient as the JMS properties may not be required but sometimes can catch early any issues with the underlying JMS provider and the use of JMS properties. See also the option eagerLoadingOfBody. | false | Boolean
 | *camel.component.amqp.eager-poison-body* | If eagerLoadingOfProperties is enabled and the JMS message payload (JMS body or JMS properties) (cannot be read/mapped), then set this text as the message body instead so the message can be processed (the cause of the poison are already stored as exception on the Exchange). This can be turned off by setting eagerPoisonBody=false. See also the option eagerLoadingOfProperties. | Poison JMS message due to ${exception.message} | String
-| *camel.component.amqp.enabled* | Enable amqp component | true | Boolean
+| *camel.component.amqp.enabled* | Whether to enable auto configuration of the amqp component. This is enabled by default. |  | Boolean
 | *camel.component.amqp.error-handler* | Specifies a org.springframework.util.ErrorHandler to be invoked in case of any uncaught exceptions thrown while processing a Message. By default these exceptions will be logged at the WARN level, if no errorHandler has been configured. You can configure logging level and whether stack traces should be logged using errorHandlerLoggingLevel and errorHandlerLogStackTrace options. This makes it much easier to configure, than having to code a custom errorHandler. The option is a org.springframework.util.ErrorHandler type. |  | String
 | *camel.component.amqp.error-handler-log-stack-trace* | Allows to control whether stacktraces should be logged or not, by the default errorHandler. | true | Boolean
 | *camel.component.amqp.error-handler-logging-level* | Allows to configure the default errorHandler logging level for logging uncaught exceptions. |  | LoggingLevel
@@ -322,6 +327,7 @@ The component supports 83 options, which are listed below.
 | *camel.component.amqp.idle-consumer-limit* | Specify the limit for the number of consumers that are allowed to be idle at any given time. | 1 | Integer
 | *camel.component.amqp.idle-task-execution-limit* | Specifies the limit for idle executions of a receive task, not having received any message within its execution. If this limit is reached, the task will shut down and leave receiving to other executing tasks (in the case of dynamic scheduling; see the maxConcurrentConsumers setting). There is additional doc available from Spring. | 1 | Integer
 | *camel.component.amqp.include-all-j-m-s-x-properties* | Whether to include all JMSXxxx properties when mapping from JMS to Camel Message. Setting this to true will include properties such as JMSXAppID, and JMSXUserID etc. Note: If you are using a custom headerFilterStrategy then this option does not apply. | false | Boolean
+| *camel.component.amqp.include-amqp-annotations* | Whether to include AMQP annotations when mapping from AMQP to Camel Message. Setting this to true will map AMQP message annotations to message headers. Due to limitations in Apache Qpid JMS API, currently delivery annotations are ignored. | false | Boolean
 | *camel.component.amqp.include-sent-j-m-s-message-i-d* | Only applicable when sending to JMS destination using InOnly (eg fire and forget). Enabling this option will enrich the Camel Exchange with the actual JMSMessageID that was used by the JMS client when the message was sent to the JMS destination. | false | Boolean
 | *camel.component.amqp.jms-key-format-strategy* | Pluggable strategy for encoding and decoding JMS keys so they can be compliant with the JMS specification. Camel provides two implementations out of the box: default and passthrough. The default strategy will safely marshal dots and hyphens (. and -). The passthrough strategy leaves the key as is. Can be used for JMS brokers which do not care whether JMS header keys contain illegal characters. You can provide your own implementation of the org.apache.camel.component.jms.JmsKeyFormatStrategy and refer to it using the # notation. The option is a org.apache.camel.component.jms.JmsKeyFormatStrategy type. |  | String
 | *camel.component.amqp.jms-operations* | Allows you to use your own implementation of the org.springframework.jms.core.JmsOperations interface. Camel uses JmsTemplate as default. Can be used for testing purpose, but not used much as stated in the spring API docs. The option is a org.springframework.jms.core.JmsOperations type. |  | String

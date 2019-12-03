@@ -5,10 +5,8 @@ Camel supports most of the
 http://www.eaipatterns.com/toc.html[Enterprise Integration Patterns]
 from the excellent book by Gregor Hohpe and Bobby Woolf.
 
-If you are new to Camel you might want to try the
-Getting Started in the
-User Guide before attempting to implement these
-patterns.
+If you are new to Camel you might want to try the xref:getting-started.adoc[Getting Started] in the
+User Guide before attempting to implement these patterns.
 
 [[EnterpriseIntegrationPatterns-MessagingSystems]]
 == Messaging Systems
@@ -65,11 +63,23 @@ a|image::eip/GuaranteedMessagingIcon.gif[image]
 make sure that a message will be delivered, even if the messaging system
 fails?
 
+a|image::eip/ChannelAdapterIcon.gif[image]
+|xref:channel-adapter.adoc[Channel Adapter] |How can you connect an
+application to the messaging system so that it can send and receive messages?
+
+a|image::eip/MessagingBridgeIcon.gif[image]
+|xref:messaging-bridge.adoc[Messaging Bridge] |How can multiple messaging systems
+be connected so that messages available on one are also available on the others??
+
 a|image::eip/MessageBusIcon.gif[image]
 |xref:message-bus.adoc[Message Bus] |What is an architecture that
 enables separate applications to work together, but in a de-coupled
 fashion such that applications can be easily added or removed without
 affecting the others?
+
+a|image::eip/MessagingBridgeIcon.gif[image]
+|xref:change-data-capture.adoc[Change Data Capture] | Data synchronization by capturing
+changes made to a database, and apply those changes to another system.
 |=======================================================================
 
 [[EnterpriseIntegrationPatterns-MessageConstruction]]
@@ -85,14 +95,19 @@ a|image::eip/RequestReplyIcon.gif[image]
 |xref:request-reply.adoc[Request Reply] |When an application sends a
 message, how can it get a response from the receiver?
 
+a|image::eip/ReturnAddressIcon.gif[image]
+|xref:return-address.adoc[Return Address] |How does a replier know where
+to send the reply?
+
 a|image::eip/CorrelationIdentifierIcon.gif[image]
 |xref:correlation-identifier.adoc[Correlation Identifier] |How does a
 requestor that has received a reply know which request this is the reply
 for?
 
-a|image::eip/ReturnAddressIcon.gif[image]
-|xref:return-address.adoc[Return Address] |How does a replier know where
-to send the reply?
+a|image::eip/MessageExpirationIcon.gif[image]
+|xref:message-expiration.adoc[Message Expiration] |How can a sender indicate
+when a message should be considered stale and thus shouldn’t be processed?
+
 |=======================================================================
 
 [[EnterpriseIntegrationPatterns-MessageRouting]]
@@ -133,13 +148,13 @@ a|image::eip/ResequencerIcon.gif[image]
 but out-of-sequence messages back into the correct order?
 
 a|image::eip/DistributionAggregateIcon.gif[image]
-|Composed Message Processor |How
+|xref:composed-message-processor.adoc[Composed Message Processor] |How
 can you maintain the overall message flow when processing a message
 consisting of multiple elements, each of which may require different
 processing?
 
 |
-|Scatter-Gather |How do you maintain the
+|xref:scatter-gather.adoc[Scatter-Gather] |How do you maintain the
 overall message flow when a message needs to be sent to multiple
 recipients, each of which may send a reply?
 
@@ -147,6 +162,16 @@ a|image::eip/RoutingTableIcon.gif[image]
 |xref:routingSlip-eip.adoc[Routing Slip] |How do we route a message
 consecutively through a series of processing steps when the sequence of
 steps is not known at design-time and may vary for each message?
+
+a|image::eip/ProcessManagerIcon.gif[image]
+|xref:process-manager.adoc[Process Manager] |How do we route a message
+through multiple processing steps when the required steps may not be known
+at design-time and may not be sequential?
+
+a|image::eip/MessageBrokerIcon.gif[image]
+|xref:message-broker.adoc[Message Broker] |How can you decouple the
+destination of a message from the sender and maintain central control
+over the flow of messages?
 
 |
 |xref:throttle-eip.adoc[Throttler] |How can I throttle messages to ensure
@@ -203,7 +228,7 @@ of message sent across the system without sacrificing information
 content?
 
 a|image::eip/NormalizerIcon.gif[image]
-|Normalizer |How do you process messages that are
+|xref:normalizer.adoc[Normalizer] |How do you process messages that are
 semantically equivalent, but arrive in a different format?
 
 |
@@ -222,7 +247,7 @@ semantically equivalent, but arrive in a different format?
 [width="100%",cols="10%,10%,80%",]
 |=======================================================================
 |
-|Messaging Mapper |How do you move data
+|xref:messaging-mapper.adoc[Messaging Mapper] |How do you move data
 between domain objects and the messaging infrastructure while keeping
 the two independent of each other?
 
@@ -235,19 +260,19 @@ a|image::eip/PollingConsumerIcon.gif[image]
 consume a message when the application is ready?
 
 a|image::eip/CompetingConsumersIcon.gif[image]
-|Competing Consumers |How can a messaging
+|xref:competing-consumers.adoc[Competing Consumers] |How can a messaging
 client process multiple messages concurrently?
 
 a|image::eip/MessageDispatcherIcon.gif[image]
-|Message Dispatcher |How can multiple
+|xref:message-dispatcher.adoc[Message Dispatcher] |How can multiple
 consumers on a single channel coordinate their message processing?
 
 a|image::eip/MessageSelectorIcon.gif[image]
-|Selective Consumer |How can a message
+|xref:selective-consumer.adoc[Selective Consumer] |How can a message
 consumer select which messages it wishes to receive?
 
 a|image::eip/DurableSubscriptionIcon.gif[image]
-|Durable Subscriber |How can a subscriber
+|xref:durable-subscriber.adoc[Durable Subscriber] |How can a subscriber
 avoid missing messages while it's not listening for them?
 
 |
@@ -259,11 +284,11 @@ a|image::eip/TransactionalClientIcon.gif[image]
 control its transactions with the messaging system?
 
 a|image::eip/MessagingGatewayIcon.gif[image]
-|Messaging Gateway |How do you encapsulate
+|xref:messaging-gateway.adoc[Messaging Gateway] |How do you encapsulate
 access to the messaging system from the rest of the application?
 
 a|image::eip/MessagingAdapterIcon.gif[image]
-|Service Activator |How can an application
+|xref:service-activator.adoc[Service Activator] |How can an application
 design a service to be invoked both via various messaging technologies
 and via non-messaging techniques?
 |=======================================================================
@@ -288,7 +313,7 @@ a|image::eip/WireTapIcon.gif[image]
 on a point-to-point channel?
 
 |
-|Message History |How can we effectively
+|xref:message-history.adoc[Message History] |How can we effectively
 analyze and debug the flow of messages in a loosely coupled system?
 
 |
@@ -302,11 +327,11 @@ analyze and debug the flow of messages in a loosely coupled system?
 === EIP Icons
 
 The EIP icons library is available as a Visio stencil file adapted to
-render the icons with the Camel color : sand. Download it
+render the icons with the Camel color. Download it
 link:{attachmentsdir}/Hohpe_EIP_camel_20150622.zip[here]
-for your presentation, functional and technical analysis documents. The
-original EIP stencil is also available in
-link:{attachmentsdir}/Hohpe_EIP_camel_OpenOffice.zip[OpenOffice
-3.x Draw] (thanks to Marco Garbelini) ,
-http://www.eaipatterns.com/download/EIP_Visio_stencil.zip[Microsoft
-Visio], or http://www.graffletopia.com/stencils/137[Omnigraffle].
+for your presentation, functional and technical analysis documents.
+
+The original EIP stencil is also available in
+link:{attachmentsdir}/Hohpe_EIP_camel_OpenOffice.zip[OpenOffice 3.x Draw],
+http://www.eaipatterns.com/download/EIP_Visio_stencil.zip[Microsoft Visio],
+or http://www.graffletopia.com/stencils/137[Omnigraffle].

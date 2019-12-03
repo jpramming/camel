@@ -772,7 +772,7 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default bossCount parameter
-         * from Netty, which is 1. User can use this operation to override the
+         * from Netty, which is 1. User can use this option to override the
          * default bossCount from Netty.
          * 
          * The option is a: <code>int</code> type.
@@ -785,7 +785,7 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default bossCount parameter
-         * from Netty, which is 1. User can use this operation to override the
+         * from Netty, which is 1. User can use this option to override the
          * default bossCount from Netty.
          * 
          * The option will be converted to a <code>int</code> type.
@@ -913,6 +913,32 @@ public interface NettyHttpEndpointBuilderFactory {
         default AdvancedNettyHttpEndpointConsumerBuilder httpMethodRestrict(
                 String httpMethodRestrict) {
             doSetProperty("httpMethodRestrict", httpMethodRestrict);
+            return this;
+        }
+        /**
+         * Whether Netty HTTP server should log a WARN if decoding the HTTP
+         * request failed and a HTTP Status 400 (bad request) is returned.
+         * 
+         * The option is a: <code>boolean</code> type.
+         * 
+         * Group: consumer (advanced)
+         */
+        default AdvancedNettyHttpEndpointConsumerBuilder logWarnOnBadRequest(
+                boolean logWarnOnBadRequest) {
+            doSetProperty("logWarnOnBadRequest", logWarnOnBadRequest);
+            return this;
+        }
+        /**
+         * Whether Netty HTTP server should log a WARN if decoding the HTTP
+         * request failed and a HTTP Status 400 (bad request) is returned.
+         * 
+         * The option will be converted to a <code>boolean</code> type.
+         * 
+         * Group: consumer (advanced)
+         */
+        default AdvancedNettyHttpEndpointConsumerBuilder logWarnOnBadRequest(
+                String logWarnOnBadRequest) {
+            doSetProperty("logWarnOnBadRequest", logWarnOnBadRequest);
             return this;
         }
         /**
@@ -1650,8 +1676,8 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default workerCount parameter
-         * from Netty, which is cpu_core_threads x 2. User can use this
-         * operation to override the default workerCount from Netty.
+         * from Netty (which is cpu_core_threads x 2). User can use this option
+         * to override the default workerCount from Netty.
          * 
          * The option is a: <code>int</code> type.
          * 
@@ -1664,8 +1690,8 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default workerCount parameter
-         * from Netty, which is cpu_core_threads x 2. User can use this
-         * operation to override the default workerCount from Netty.
+         * from Netty (which is cpu_core_threads x 2). User can use this option
+         * to override the default workerCount from Netty.
          * 
          * The option will be converted to a <code>int</code> type.
          * 
@@ -3127,8 +3153,8 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default workerCount parameter
-         * from Netty, which is cpu_core_threads x 2. User can use this
-         * operation to override the default workerCount from Netty.
+         * from Netty (which is cpu_core_threads x 2). User can use this option
+         * to override the default workerCount from Netty.
          * 
          * The option is a: <code>int</code> type.
          * 
@@ -3141,8 +3167,8 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default workerCount parameter
-         * from Netty, which is cpu_core_threads x 2. User can use this
-         * operation to override the default workerCount from Netty.
+         * from Netty (which is cpu_core_threads x 2). User can use this option
+         * to override the default workerCount from Netty.
          * 
          * The option will be converted to a <code>int</code> type.
          * 
@@ -4146,8 +4172,8 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default workerCount parameter
-         * from Netty, which is cpu_core_threads x 2. User can use this
-         * operation to override the default workerCount from Netty.
+         * from Netty (which is cpu_core_threads x 2). User can use this option
+         * to override the default workerCount from Netty.
          * 
          * The option is a: <code>int</code> type.
          * 
@@ -4159,8 +4185,8 @@ public interface NettyHttpEndpointBuilderFactory {
         }
         /**
          * When netty works on nio mode, it uses default workerCount parameter
-         * from Netty, which is cpu_core_threads x 2. User can use this
-         * operation to override the default workerCount from Netty.
+         * from Netty (which is cpu_core_threads x 2). User can use this option
+         * to override the default workerCount from Netty.
          * 
          * The option will be converted to a <code>int</code> type.
          * 

@@ -41,6 +41,27 @@ public class AMQPComponentConfiguration
      */
     private Boolean enabled;
     /**
+     * Whether to include AMQP annotations when mapping from AMQP to Camel
+     * Message. Setting this to true will map AMQP message annotations to
+     * message headers. Due to limitations in Apache Qpid JMS API, currently
+     * delivery annotations are ignored.
+     */
+    private Boolean includeAmqpAnnotations = false;
+    /**
+     * Whether to auto-discover ConnectionFactory from the registry, if no
+     * connection factory has been configured. If only one instance of
+     * ConnectionFactory is found then it will be used. This is enabled by
+     * default.
+     */
+    private Boolean allowAutoWiredConnectionFactory = false;
+    /**
+     * Whether to auto-discover DestinationResolver from the registry, if no
+     * destination resolver has been configured. If only one instance of
+     * DestinationResolver is found then it will be used. This is enabled by
+     * default.
+     */
+    private Boolean allowAutoWiredDestinationResolver = false;
+    /**
      * To use a shared JMS configuration. The option is a
      * org.apache.camel.component.jms.JmsConfiguration type.
      */
@@ -637,6 +658,32 @@ public class AMQPComponentConfiguration
      * will be logged at WARN or ERROR level and ignored.
      */
     private Boolean bridgeErrorHandler = false;
+
+    public Boolean getIncludeAmqpAnnotations() {
+        return includeAmqpAnnotations;
+    }
+
+    public void setIncludeAmqpAnnotations(Boolean includeAmqpAnnotations) {
+        this.includeAmqpAnnotations = includeAmqpAnnotations;
+    }
+
+    public Boolean getAllowAutoWiredConnectionFactory() {
+        return allowAutoWiredConnectionFactory;
+    }
+
+    public void setAllowAutoWiredConnectionFactory(
+            Boolean allowAutoWiredConnectionFactory) {
+        this.allowAutoWiredConnectionFactory = allowAutoWiredConnectionFactory;
+    }
+
+    public Boolean getAllowAutoWiredDestinationResolver() {
+        return allowAutoWiredDestinationResolver;
+    }
+
+    public void setAllowAutoWiredDestinationResolver(
+            Boolean allowAutoWiredDestinationResolver) {
+        this.allowAutoWiredDestinationResolver = allowAutoWiredDestinationResolver;
+    }
 
     public String getConfiguration() {
         return configuration;

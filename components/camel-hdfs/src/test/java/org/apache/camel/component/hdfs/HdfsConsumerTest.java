@@ -30,6 +30,7 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -102,7 +103,6 @@ public class HdfsConsumerTest {
 
         // then
         verify(hdfsInfoFactory, times(0)).newHdfsInfo(anyString());
-
     }
 
     @Test
@@ -123,7 +123,6 @@ public class HdfsConsumerTest {
 
         // then
         verify(hdfsInfoFactory, times(1)).newHdfsInfo(hdfsPath);
-
     }
 
     @Test
@@ -137,6 +136,7 @@ public class HdfsConsumerTest {
         when(endpointConfig.isConnectOnStartup()).thenReturn(true);
         when(endpointConfig.getFileSystemLabel(anyString())).thenReturn("TEST_FS_LABEL");
         when(endpointConfig.getChunkSize()).thenReturn(100 * 1000);
+        when(endpointConfig.getMaxMessagesPerPoll()).thenReturn(10);
         when(endpoint.getCamelContext()).thenReturn(context);
         when(endpoint.createExchange()).thenReturn(new DefaultExchange(context));
         when(endpoint.getEndpointUri()).thenReturn(hdfsPath);
@@ -173,7 +173,6 @@ public class HdfsConsumerTest {
         ByteArrayOutputStream body = exchange.getIn().getBody(ByteArrayOutputStream.class);
         assertThat(body, notNullValue());
         assertThat(body.toString(), startsWith("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget fermentum arcu, vel dignissim ipsum."));
-
     }
 
     @Test
@@ -188,6 +187,7 @@ public class HdfsConsumerTest {
         when(endpointConfig.getFileSystemLabel(anyString())).thenReturn("TEST_FS_LABEL");
         when(endpointConfig.getChunkSize()).thenReturn(100 * 1000);
         when(endpointConfig.isStreamDownload()).thenReturn(true);
+        when(endpointConfig.getMaxMessagesPerPoll()).thenReturn(10);
         when(endpoint.getCamelContext()).thenReturn(context);
         when(endpoint.createExchange()).thenReturn(new DefaultExchange(context));
         when(endpoint.getEndpointUri()).thenReturn(hdfsPath);
@@ -223,8 +223,6 @@ public class HdfsConsumerTest {
 
         InputStream body = (InputStream) exchange.getIn().getBody();
         assertThat(body, notNullValue());
-
-
     }
 
 }
